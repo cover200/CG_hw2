@@ -7,6 +7,8 @@
 #define PI 3.141592653589793238462643383279502884L
 int x[25], y[25], size[25];
 int r[27], g[27], b[27];
+int count = 0;
+int dx = 0, dy = 0;
 
 float xcar[2];
 float speed[2];
@@ -126,9 +128,11 @@ void circle(int r, int i, float x, int y) {
 	glVertex2f(r*cos(i*PI / 180.0) + x, r*sin(i*PI / 180.0) + y);
 }
 void flower(int r, int x, int y) {
-
-	int dx = rand() % 3 - 1;
-	int dy = rand() % 3 - 1;
+	if (count++ > 1500) {
+		dx = rand() % 3 - 1;
+		dy = rand() % 3 - 1;
+		count = 0;
+	}
 
 	glBegin(GL_POLYGON);			//°≈’∫¥Õ°
 	for (int i = 0; i <= 46; i++)
@@ -245,8 +249,6 @@ void play(void) {
 
 	if (window[0] > 1080) window[0] = 0;
 	if (window[1] > 1080) window[1] = 0;
-
-	std::cout << speed[0] << ' ' << speed[1] << '\n';
 
 	glutPostRedisplay();
 }
