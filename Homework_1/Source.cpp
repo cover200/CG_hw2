@@ -12,7 +12,7 @@ int r[28], g[28], b[28];
 int count = 0;
 int dx = 0, dy = 0;
 
-float xplane;
+float xplane ,yplane;
 float xcar[2];
 float speed[3];
 float window[2];
@@ -299,6 +299,8 @@ void play(void) {
 		xplane = rand() % 100 + 500;
 		speed[2] = (rand() % 100 + 100) / 100.0;
 	}
+	if (yplane >= 230) yplane = 230;
+	else if (yplane <= -10) yplane = -10;
 
 	if (window[0] > 1080) window[0] = 0;
 	if (window[1] > 1080) window[1] = 0;
