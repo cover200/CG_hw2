@@ -256,7 +256,13 @@ void play(void) {
 		g[26] = rand() % 155 + 100;
 		b[26] = rand() % 155 + 100;
 	}
-	if(xplane <)
+	if (xplane + 110 < -400) {
+		r[27] = rand() % 105 + 150;
+		g[27] = rand() % 155 + 100;
+		b[27] = rand() % 100 + 50;
+		xplane = rand() % 100 + 500;
+		speed[2] = (rand() % 100 + 100) / 100.0;
+	}
 
 	if (window[0] > 1080) window[0] = 0;
 	if (window[1] > 1080) window[1] = 0;
