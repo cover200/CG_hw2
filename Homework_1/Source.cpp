@@ -9,10 +9,10 @@ float rad = PI/180.0;
 
 int x[25], y[25], size[25];
 int r[28], g[28], b[28];
-int count = 0;
+int count[2] = { 0 };
 int dx = 0, dy = 0;
 
-float xplane ,yplane;
+float xplane ,yplane=80;
 float xcar[2];
 float speed[3];
 float window[2];
@@ -134,10 +134,10 @@ void circle(int r1, int r2, int i, float x, int y) {
 	glVertex2f(r1*cos(i*rad) + x, r2*sin(i*rad) + y);
 }
 void flower(int r, int x, int y) {
-	if (count++ > 1500) {
+	if (count[0]++ > 1500) {
 		dx = rand() % 3 - 1;
 		dy = rand() % 3 - 1;
-		count = 0;
+		count[0] = 0;
 	}
 
 	glBegin(GL_POLYGON);			//กลีบดอก
@@ -217,7 +217,7 @@ void plane() {
 	glBegin(GL_POLYGON);		//ตัวเครื่อง
 	setColor(r[27], g[27], b[27]);
 	for (int i = 0; i < 360; i++) {
-		circle(90, 30, i, xplane, 80);
+		circle(90, 30, i, xplane, yplane);
 	}
 	glEnd();
 
@@ -225,30 +225,30 @@ void plane() {
 		glBegin(GL_POLYGON);
 		setColor(r[27] + j * 5 - 100, g[27] - 100, b[27] - 100);
 		for (int i = 0; i < 360; i++)
-			circle(18 - j * 2, 10 - j, i, xplane+74 + j * 2, 84 + j * 3);
+			circle(18 - j * 2, 10 - j, i, xplane+74 + j * 2, yplane+4 + j * 3);
 		glEnd();
 	}
 
 	glColor3f(0, 0, 0);
 	glBegin(GL_POLYGON);		//ขอบห้องบังคับ
 	for (int i = 127; i <= 184; i++)
-		circle(90, 30, i, xplane, 80);
-	glVertex2f(xplane-54, 80-2);
+		circle(90, 30, i, xplane, yplane);
+	glVertex2f(xplane-54, yplane -2);
 	glEnd();
 
 	glBegin(GL_POLYGON);		//กระจกห้องบังคับ
 	setColor(204, 255, 255);
 	for (int i = 129; i <= 180; i++)
-		circle(90, 30, i, xplane, 80);
+		circle(90, 30, i, xplane, yplane);
 	setColor(0, 204, 204);
-	glVertex2f(xplane-57, 80);
+	glVertex2f(xplane-57, yplane);
 	glEnd();
 
 	for (int j = 0; j < 10; j++) {		//ปีก
 		glBegin(GL_POLYGON);
 		setColor(r[27] + j * 5 - 50, g[27] - 50, b[27] - 50);
 		for (int i = 0; i < 360; i++)
-			circle(35 - j * 2, 15 - j, i, xplane+8 + j * 3, 80-12 - j * 2);
+			circle(35 - j * 2, 15 - j, i, xplane+8 + j * 3, yplane -12 - j * 2);
 		glEnd();
 	}
 }
@@ -277,6 +277,11 @@ void play(void) {
 		window[i] += speed[i] * 2;
 	}
 	xplane -= speed[2];
+	if (count[1]++ >= 20) {
+		int dy = rand() % 3 - 1;
+		yplane += dy;
+		count[1] = 0;
+	}
 
 	if (xcar[0] + 80 < -400) {
 		xcar[0] = rand()%100+500;
@@ -297,7 +302,7 @@ void play(void) {
 		g[27] = rand() % 155 + 100;
 		b[27] = rand() % 100 + 50;
 		xplane = rand() % 100 + 500;
-		speed[2] = (rand() % 100 + 100) / 100.0;
+		speed[2] = (rand() % 100 + 30) / 100.0;
 	}
 	if (yplane >= 230) yplane = 230;
 	else if (yplane <= -10) yplane = -10;
@@ -344,7 +349,7 @@ int main(int argc, char** argv)
 	g[27] = rand() % 155 + 100;
 	b[27] = rand() % 100 + 50;
 	xplane = rand() % 100 + 500;
-	speed[2] = (rand() % 100 + 100) / 100.0;
+	speed[2] = (rand() % 100 + 30) / 100.0;
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
