@@ -214,7 +214,43 @@ void car(float x, int y, int r, int g, int b, int window) {
 
 }
 void plane() {
+	glBegin(GL_POLYGON);		//ตัวเครื่อง
+	setColor(r[27], g[27], b[27]);
+	for (int i = 0; i < 360; i++) {
+		circle(90, 30, i, xplane, 80);
+	}
+	glEnd();
 
+	for (int j = 0; j < 8; j++) {		//หาง
+		glBegin(GL_POLYGON);
+		setColor(r[27] + j * 5 - 100, g[27] - 100, b[27] - 100);
+		for (int i = 0; i < 360; i++)
+			circle(18 - j * 2, 10 - j, i, xplane+74 + j * 2, 84 + j * 3);
+		glEnd();
+	}
+
+	glColor3f(0, 0, 0);
+	glBegin(GL_POLYGON);		//ขอบห้องบังคับ
+	for (int i = 127; i <= 184; i++)
+		circle(90, 30, i, xplane, 80);
+	glVertex2f(xplane-54, 80-2);
+	glEnd();
+
+	glBegin(GL_POLYGON);		//กระจกห้องบังคับ
+	setColor(204, 255, 255);
+	for (int i = 129; i <= 180; i++)
+		circle(90, 30, i, xplane, 80);
+	setColor(0, 204, 204);
+	glVertex2f(xplane-57, 80);
+	glEnd();
+
+	for (int j = 0; j < 10; j++) {		//ปีก
+		glBegin(GL_POLYGON);
+		setColor(r[27] + j * 5 - 50, g[27] - 50, b[27] - 50);
+		for (int i = 0; i < 360; i++)
+			circle(35 - j * 2, 15 - j, i, xplane+8 + j * 3, 80-12 - j * 2);
+		glEnd();
+	}
 }
 void draw() {
 	background();
@@ -222,11 +258,11 @@ void draw() {
 		setColor(r[i], g[i], b[i]);
 		flower(size[i], x[i], y[i]);
 	}	//ดอกไม้
+	plane();
 	house();
 	fence();
 	car(xcar[0], -120, r[25], g[25], b[25], window[0]);
 	car(xcar[1], -150, r[26], g[26], b[26], window[1]);
-	plane();
 }
 void display(void)
 {
@@ -281,7 +317,6 @@ void mouse(int button, int state, int x, int y)
 		break;
 	}
 }
-
 
 int main(int argc, char** argv)
 {
