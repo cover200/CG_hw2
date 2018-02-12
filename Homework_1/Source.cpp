@@ -5,7 +5,7 @@
 #include <iostream>
 
 #define PI 3.14159265358979323846
-float rad = rad;
+float rad = PI/180.0;
 
 int x[25], y[25], size[25];
 int r[28], g[28], b[28];
