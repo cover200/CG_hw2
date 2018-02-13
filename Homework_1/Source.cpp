@@ -134,12 +134,6 @@ void circle(int r1, int r2, int i, float x, int y) {
 	glVertex2f(r1*cos(i*rad) + x, r2*sin(i*rad) + y);
 }
 void flower(int r, int x, int y) {
-	if (count[0]++ > 1500) {
-		dx = rand() % 3 - 1;
-		dy = rand() % 3 - 1;
-		count[0] = 0;
-	}
-
 	glBegin(GL_POLYGON);			//°≈’∫¥Õ°
 	for (int i = 0; i <= 46; i++)
 		leaf(r, i, x + dx*5, y + dy*5);
@@ -180,6 +174,19 @@ void flower(int r, int x, int y) {
 	glBegin(GL_POLYGON);
 	for (int i = 0; i <= 360; i += 5)
 		circle(r, i, x + dx * 5, y + dy * 5);
+	glEnd();
+}
+void flower2(int r, int x, int y) {
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < 360; i += 72)
+		for (int j = 0; j < 360; j++)
+			circle(r+1, j, x-dx*5+r*cos(i*rad), y-dy*5+r*sin(i*rad));
+	glEnd();
+
+	setColor(255, 255, 0);				//°≈“ß¥Õ°
+	glBegin(GL_POLYGON);
+	for (int i = 0; i <= 360; i += 5)
+		circle(r, i, x - dx * 5, y - dy * 5);
 	glEnd();
 }
 void car(float x, int y, int r, int g, int b, int window) {
@@ -255,9 +262,10 @@ void plane() {
 void draw() {
 	background();
 	for (int i = 0; i < 25; i++) {
-		setColor(r[i], g[i], b[i]);
-		flower(size[i], x[i], y[i]);
-	}	//¥Õ°‰¡È
+		setColor(r[i], g[i], b[i]);		//¥Õ°‰¡È
+		if(i%2==0) flower(size[i], x[i], y[i]);
+		else flower2(size[i], x[i], y[i]);
+	}
 	plane();
 	house();
 	fence();
@@ -272,13 +280,19 @@ void display(void)
 	glutSwapBuffers();
 }
 void play(void) {
+	if (count[0]++ > 50) {
+		dx = rand() % 3 - 1;
+		dy = rand() % 3 - 1;
+		count[0] = 0;
+	}
+
 	for (int i = 0; i < 2; i++) {
 		xcar[i] -= speed[i];
 		window[i] += speed[i] * 2;
 	}
 	xplane -= speed[2];
 	if (count[1]++ >= 20) {
-		int dy = rand() % 3 - 1;
+		int dy = rand() % 5 - 2;
 		yplane += dy;
 		count[1] = 0;
 	}
