@@ -327,7 +327,7 @@ void play(void) {
 		g[27] = rand() % 155 + 100;
 		b[27] = rand() % 100 + 50;
 		xplane = rand() % 100 + 500;
-		speed[2] = (rand() % 100 + 30) / 100.0;
+		speed[2] = (rand() % 100 + 50) / 100.0;
 	}
 	if (yplane >= 230) yplane = 230;
 	else if (yplane <= -10) yplane = -10;
@@ -374,7 +374,7 @@ int main(int argc, char** argv)
 	g[27] = rand() % 155 + 100;
 	b[27] = rand() % 100 + 50;
 	xplane = rand() % 100 + 500;
-	speed[2] = (rand() % 100 + 30) / 100.0;
+	speed[2] = (rand() % 100 + 50) / 100.0;
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
