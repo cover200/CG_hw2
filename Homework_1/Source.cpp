@@ -9,8 +9,9 @@ float rad = PI/180.0;
 
 int x[25], y[25], size[25];
 int r[28], g[28], b[28];
-int count[2] = { 0 };
-int dx = 0, dy = 0;
+int count[3] = { 0 };
+int dx = 0, dy = 0, dnoon = 0;
+bool noon = false;
 
 float xplane ,yplane=80;
 float xcar[2];
@@ -23,6 +24,9 @@ void init(void)
 	gluOrtho2D(-400, 400.0, -250.0, 250.0);
 }
 void setColor(float r, float g, float b) {
+	r -= dnoon;
+	g -= dnoon;
+	b -= dnoon;
 	glColor3f(r / 255, g / 255, b / 255);
 }
 void mountain(int x, int y) {
@@ -34,12 +38,14 @@ void mountain(int x, int y) {
 }
 void background() {
 	glBegin(GL_POLYGON);		//ท้องฟ้า
-	setColor(54, 232, 202);
-	glVertex2f(-400, 250);
-	glVertex2f(400, 250);
-	setColor(54, 90, 232);
-	glVertex2f(400, -20);
-	glVertex2f(-400, -20);
+		if(!noon) setColor(54, 232, 202);
+		else setColor(255, 189, 7);
+			glVertex2f(-400, 250);
+			glVertex2f(400, 250);
+		if(!noon) setColor(54, 90, 232);
+		else setColor(223, 223, 16);
+			glVertex2f(400, -20);
+			glVertex2f(-400, -20);
 	glEnd();
 
 	setColor(15, 70, 0);
@@ -285,6 +291,11 @@ void play(void) {
 		dy = rand() % 3 - 1;
 		count[0] = 0;
 	}
+	if (count[2]++ > 300) {
+		noon = !noon;
+		count[2] = 0;
+	}
+	dnoon = (noon) ? 40 : 0;
 
 	for (int i = 0; i < 2; i++) {
 		xcar[i] -= speed[i];
